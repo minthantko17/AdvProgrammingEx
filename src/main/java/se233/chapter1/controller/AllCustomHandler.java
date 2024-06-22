@@ -13,6 +13,8 @@ import se233.chapter1.model.item.Armor;
 import se233.chapter1.model.item.BasedEquipment;
 import se233.chapter1.model.item.Weapon;
 
+import java.util.ArrayList;
+
 public class AllCustomHandler {
     public static class GenCharacterHandler implements EventHandler<ActionEvent> {
         @Override
@@ -48,18 +50,23 @@ public class AllCustomHandler {
     public static void onDragDropped(DragEvent event, Label label, StackPane imgGroup){
         boolean dragCompleted=false;
         Dragboard dragboard=event.getDragboard();       //(format, sword)
+        ArrayList<BasedEquipment> allEquipments=Launcher.getAllEquipments();
+
         if(dragboard.hasContent(BasedEquipment.DATA_FORMAT)){
             BasedEquipment retrievedEquipment=(BasedEquipment)dragboard.getContent(BasedEquipment.DATA_FORMAT);
             BasedCharacter character=Launcher.getMainCharacter();
 
             if(retrievedEquipment.getClass().getSimpleName().equals("Weapon")){
+                if(Launcher.getEquippedWeapon()!=null){ allEquipments.add(Launcher.getEquippedWeapon()); } //add to itemList
                 Launcher.setEquippedWeapon((Weapon)retrievedEquipment); //for EquipPane
                 character.equipWeapon((Weapon)retrievedEquipment);  //for CharacterPane, update status
             }else{
+                if(Launcher.getEquippedArmor()!=null){ allEquipments.add(Launcher.getEquippedArmor()); }
                 Launcher.setEquippedArmor((Armor)retrievedEquipment);
                 character.equipArmor((Armor)retrievedEquipment);
             }
             Launcher.setMainCharacter(character);   //to update character stat for characterPane
+            Launcher.setAllEquipments(allEquipments);
             Launcher.refreshPane();
 
             ImageView imgView=new ImageView(); //for equipped item display
@@ -74,5 +81,24 @@ public class AllCustomHandler {
             dragCompleted=true;
         }
         event.setDropCompleted(dragCompleted);
+    }
+
+    public static void onEquipdone(DragEvent event){
+        Dragboard dragboard=event.getDragboard();
+        ArrayList<BasedEquipment> allEquipments=Launcher.getAllEquipments();
+        BasedEquipment retrievedEquipment=(BasedEquipment)dragboard.getContent(BasedEquipment.DATA_FORMAT);
+
+        int pos=-1;     //find equip item from allItemList
+        for(int i=0; i<allEquipments.size(); i++){
+            if(allEquipments.get(i).getName().equals(retrievedEquipment.getName())){
+                pos=i;
+            }
+        }
+        if(pos!=-1){    //remove equipped Item from allitemList (will be added to equipped list)
+            allEquipments.remove(pos);
+        }
+        Launcher.setAllEquipments(allEquipments);
+        Launcher.refreshPane();
+
     }
 }

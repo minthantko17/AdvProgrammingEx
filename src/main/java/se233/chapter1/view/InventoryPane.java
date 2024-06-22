@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -14,6 +15,7 @@ import se233.chapter1.Launcher;
 import java.util.ArrayList;
 
 import static se233.chapter1.controller.AllCustomHandler.onDragDetected;
+import static se233.chapter1.controller.AllCustomHandler.onEquipdone;
 
 public class InventoryPane extends ScrollPane {
     private ArrayList<BasedEquipment> equipmentArray;
@@ -39,7 +41,12 @@ public class InventoryPane extends ScrollPane {
                         onDragDetected(event, equipmentArray.get(finalI), imageViewList[finalI]);   //preDefined in AllCustomhandler class
                     }
                 });
-
+                imageViewList[i].setOnDragDone(new EventHandler<DragEvent>() {
+                    @Override
+                    public void handle(DragEvent event) {
+                        onEquipdone(event);
+                    }
+                });
             }
             inventoryInfoPane.getChildren().addAll(imageViewList);  //add imageview to the Pane
         }
