@@ -9,8 +9,10 @@ import javafx.scene.layout.Pane;
 import se233.chapter1.model.item.BasedEquipment;
 import se233.chapter1.Launcher;
 
+import java.util.ArrayList;
+
 public class InventoryPane extends ScrollPane {
-    private BasedEquipment[] equipmentArray;
+    private ArrayList<BasedEquipment> equipmentArray;
     public InventoryPane(){    }
 
     //create pane with items
@@ -20,10 +22,10 @@ public class InventoryPane extends ScrollPane {
         inventoryInfoPane.setPadding(new Insets(25, 25, 25, 25));
 
         if (equipmentArray != null){    //add equipments to imageview
-            ImageView[] imageViewList= new ImageView[equipmentArray.length];
-            for(int i=0; i<equipmentArray.length; i++){
+            ImageView[] imageViewList= new ImageView[equipmentArray.size()];
+            for(int i=0; i<equipmentArray.size(); i++){
                 imageViewList[i]= new ImageView();
-                imageViewList[i].setImage(new Image(Launcher.class.getResource(equipmentArray[i].getImagepath()).toString()));
+                imageViewList[i].setImage(new Image(Launcher.class.getResource(equipmentArray.get(i).getImagepath()).toString()));
             }
             inventoryInfoPane.getChildren().addAll(imageViewList);  //add imageview to the Pane
         }
@@ -31,7 +33,7 @@ public class InventoryPane extends ScrollPane {
         return inventoryInfoPane;
     }
 
-    public void drawPane(BasedEquipment [] equipmentArray){
+    public void drawPane(ArrayList<BasedEquipment> equipmentArray){
         this.equipmentArray = equipmentArray;
         Pane inventoryInfo= getDetailsPane();
         this.setStyle("-fx-background-color:Red;");     //this == inventoryInfoPane

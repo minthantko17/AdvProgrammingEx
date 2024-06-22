@@ -15,10 +15,12 @@ import se233.chapter1.view.CharacterPane;
 import se233.chapter1.view.EquipPane;
 import se233.chapter1.view.InventoryPane;
 
+import java.util.ArrayList;
+
 public class Launcher extends Application {
     private static Scene mainScene;
     private static BasedCharacter mainCharacter=null;
-    private static BasedEquipment[] allEquipments=null;
+    private static ArrayList<BasedEquipment> allEquipments=null;
     private static Weapon equippedWeapon=null;
     private static Armor equippedArmor=null;
     private static CharacterPane characterPane=null;
