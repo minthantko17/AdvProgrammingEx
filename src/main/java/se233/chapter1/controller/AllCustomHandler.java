@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.StackPane;
 import se233.chapter1.Launcher;
+import se233.chapter1.model.character.BasedCharacter;
 import se233.chapter1.model.item.Armor;
 import se233.chapter1.model.item.BasedEquipment;
 import se233.chapter1.model.item.Weapon;
@@ -49,13 +50,19 @@ public class AllCustomHandler {
         Dragboard dragboard=event.getDragboard();       //(format, sword)
         if(dragboard.hasContent(BasedEquipment.DATA_FORMAT)){
             BasedEquipment retrievedEquipment=(BasedEquipment)dragboard.getContent(BasedEquipment.DATA_FORMAT);
+            BasedCharacter character=Launcher.getMainCharacter();
+
             if(retrievedEquipment.getClass().getSimpleName().equals("Weapon")){
-                Launcher.setEquippedWeapon((Weapon)retrievedEquipment);
+                Launcher.setEquippedWeapon((Weapon)retrievedEquipment); //for EquipPane
+                character.equipWeapon((Weapon)retrievedEquipment);  //for CharacterPane, update status
             }else{
                 Launcher.setEquippedArmor((Armor)retrievedEquipment);
+                character.equipArmor((Armor)retrievedEquipment);
             }
+            Launcher.setMainCharacter(character);   //to update character stat for characterPane
+            Launcher.refreshPane();
 
-            ImageView imgView=new ImageView();
+            ImageView imgView=new ImageView(); //for equipped item display
             if(imgGroup.getChildren().size()!=1){
                 imgGroup.getChildren().remove(1);
                 Launcher.refreshPane();

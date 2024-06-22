@@ -33,6 +33,8 @@ public class Launcher extends Application {
     public static void setEquippedArmor(Armor equippedArmor) { Launcher.equippedArmor = equippedArmor; }
     public static ArrayList<BasedEquipment> getAllEquipments() { return allEquipments; }
     public static void setAllEquipments(ArrayList<BasedEquipment> allEquipments) { Launcher.allEquipments = allEquipments; }
+    public static BasedCharacter getMainCharacter(){return mainCharacter;}
+    public static void setMainCharacter(BasedCharacter mainCharacter){Launcher.mainCharacter=mainCharacter;}
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -66,10 +68,6 @@ public class Launcher extends Application {
         equipPane.drawPane(equippedWeapon, equippedArmor);
         inventoryPane.drawPane(allEquipments);
     }
-
-    public static BasedCharacter getMainCharacter(){return mainCharacter;}
-    public static void setMainCharacter(BasedCharacter mainCharacter){
-        Launcher.mainCharacter=mainCharacter;}
 
     public static void main(String[] args) {launch(args);}
 }

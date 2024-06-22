@@ -18,6 +18,18 @@ public class BasedCharacter {
     public Integer getPower() {return power;}
     public Integer getResistance() {return resistance;}
     public Integer getDefense() {return defense;}
+
+    //update character status according to equipment
+    public void equipWeapon(Weapon weapon){
+        this.weapon=weapon;
+        this.power=this.basedPow+weapon.getPower();
+    }
+    public void equipArmor(Armor armor){
+        this.armor=armor;
+        this.defense=this.basedDef+armor.getDefense();
+        this.resistance=this.basedRes+armor.getResistance();
+    }
+
     @Override
     public String toString() {return name;}
     public DamageType getType(){return type;}
