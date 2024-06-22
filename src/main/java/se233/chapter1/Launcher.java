@@ -27,6 +27,13 @@ public class Launcher extends Application {
     private static EquipPane equipPane=null;
     private static InventoryPane inventoryPane=null;
 
+    public static Weapon getEquippedWeapon() { return equippedWeapon; }
+    public static void setEquippedWeapon(Weapon equippedWeapon) {Launcher.equippedWeapon = equippedWeapon;}
+    public static Armor getEquippedArmor() { return equippedArmor; }
+    public static void setEquippedArmor(Armor equippedArmor) { Launcher.equippedArmor = equippedArmor; }
+    public static ArrayList<BasedEquipment> getAllEquipments() { return allEquipments; }
+    public static void setAllEquipments(ArrayList<BasedEquipment> allEquipments) { Launcher.allEquipments = allEquipments; }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Chapter1");
