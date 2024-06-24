@@ -30,8 +30,11 @@ public class AllCustomHandler {
         @Override
         public void handle(ActionEvent actionEvent) {
             //remove from equipPane
-            Launcher.setEquippedWeapon(null);   //set null from Launcher
+            Launcher.getMainCharacter().equipWeapon(null);
+            Launcher.getMainCharacter().equipArmor(null);
+            Launcher.setEquippedWeapon(null);
             Launcher.setEquippedArmor(null);
+//            Launcher.setMainCharacter(Launcher.getBasedMainCharacter());
             Launcher.setAllEquipments(GenItemList.setUpItemList());
             Launcher.refreshPane();
             //setall in itemPane

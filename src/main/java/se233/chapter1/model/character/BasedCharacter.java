@@ -21,13 +21,24 @@ public class BasedCharacter {
 
     //update character status according to equipment
     public void equipWeapon(Weapon weapon){
-        this.weapon=weapon;
-        this.power=this.basedPow+weapon.getPower();
+        if (weapon!=null) {
+            this.weapon = weapon;
+            this.power = this.basedPow + weapon.getPower();
+        }else{
+            this.weapon=null;
+            this.power=this.basedPow;
+        }
     }
     public void equipArmor(Armor armor){
-        this.armor=armor;
-        this.defense=this.basedDef+armor.getDefense();
-        this.resistance=this.basedRes+armor.getResistance();
+        if(armor!=null) {
+            this.armor = armor;
+            this.defense = this.basedDef + armor.getDefense();
+            this.resistance = this.basedRes + armor.getResistance();
+        }else{
+            this.armor=null;
+            this.defense=this.basedDef;
+            this.resistance=this.basedRes;
+        }
     }
 
     @Override
