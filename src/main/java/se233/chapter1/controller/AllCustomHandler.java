@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.StackPane;
 import se233.chapter1.Launcher;
+import se233.chapter1.model.DamageType;
 import se233.chapter1.model.character.BasedCharacter;
 import se233.chapter1.model.item.Armor;
 import se233.chapter1.model.item.BasedEquipment;
@@ -55,12 +56,34 @@ public class AllCustomHandler {
     //while dragging over the target--check status and availability to drop
     public static void onDragOver(DragEvent event, String type){
         Dragboard dragboard=event.getDragboard();   //carried data
+        BasedCharacter character=Launcher.getMainCharacter();
         BasedEquipment retrievedEquipment=(BasedEquipment)dragboard.getContent(BasedEquipment.DATA_FORMAT); //carried dataFormat=BasedEqipment, Armor, Weapon
         //we get value from (key, value) -> e.g. sword
 
         //ensure dataType && check equipment type--------------//sword->Weapon->Weapon =? type
-        if(dragboard.hasContent(BasedEquipment.DATA_FORMAT) && retrievedEquipment.getClass().getSimpleName().equals(type)){
-            event.acceptTransferModes(TransferMode.MOVE);
+        String retrievedEquipmentName=retrievedEquipment.getClass().getSimpleName();
+        if(dragboard.hasContent(BasedEquipment.DATA_FORMAT) && retrievedEquipmentName.equals(type)){
+
+            Weapon carriedWeapon=null;
+            if(retrievedEquipmentName.equals("Weapon")){carriedWeapon=(Weapon)retrievedEquipment;}
+
+            switch (character.getName()){
+                case("MagicChar"):
+                    if((retrievedEquipmentName.equals("Weapon")&& carriedWeapon.getDamageType().equals(DamageType.MAGICAL)) || retrievedEquipmentName.equals("Armor")){
+                        event.acceptTransferModes(TransferMode.MOVE);
+                    }
+                    break;
+                case("PhysicalChar"):
+                    if((retrievedEquipmentName.equals("Weapon")&& carriedWeapon.getDamageType().equals(DamageType.PHYSICAL)) || retrievedEquipmentName.equals("Armor")){
+                        event.acceptTransferModes(TransferMode.MOVE);
+                    }
+                    break;
+                case("BattleMage"):
+                    if(retrievedEquipmentName.equals("Weapon")){
+                        event.acceptTransferModes(TransferMode.MOVE);
+                    }
+                    break;
+            }
         }
     }
 
