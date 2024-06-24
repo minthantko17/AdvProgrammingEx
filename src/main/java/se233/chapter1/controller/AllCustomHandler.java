@@ -26,6 +26,18 @@ public class AllCustomHandler {
         }
     }
 
+    public static class UnequipItemHandler implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            //remove from equipPane
+            Launcher.setEquippedWeapon(null);   //set null from Launcher
+            Launcher.setEquippedArmor(null);
+            Launcher.setAllEquipments(GenItemList.setUpItemList());
+            Launcher.refreshPane();
+            //setall in itemPane
+        }
+    }
+
     //to detect when start drugging item--(not sure) story data type along with equipment to check with target later
     public static void onDragDetected(MouseEvent event, BasedEquipment equipment, ImageView imgView){
         Dragboard db=imgView.startDragAndDrop(TransferMode.ANY);
