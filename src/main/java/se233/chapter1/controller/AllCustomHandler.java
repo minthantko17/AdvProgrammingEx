@@ -12,7 +12,9 @@ import se233.chapter1.model.character.BasedCharacter;
 import se233.chapter1.model.item.Armor;
 import se233.chapter1.model.item.BasedEquipment;
 import se233.chapter1.model.item.Weapon;
+import se233.chapter1.view.InventoryPane;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class AllCustomHandler {
@@ -79,6 +81,8 @@ public class AllCustomHandler {
             imgView.setImage(new Image(Launcher.class.getResource(retrievedEquipment.getImagepath()).toString()));
             imgGroup.getChildren().add(imgView);
             dragCompleted=true;
+            InventoryPane.equipSuccess=true;
+
         }
         event.setDropCompleted(dragCompleted);
     }
@@ -88,17 +92,19 @@ public class AllCustomHandler {
         ArrayList<BasedEquipment> allEquipments=Launcher.getAllEquipments();
         BasedEquipment retrievedEquipment=(BasedEquipment)dragboard.getContent(BasedEquipment.DATA_FORMAT);
 
-        int pos=-1;     //find equip item from allItemList
-        for(int i=0; i<allEquipments.size(); i++){
-            if(allEquipments.get(i).getName().equals(retrievedEquipment.getName())){
-                pos=i;
+        if(InventoryPane.equipSuccess) {
+            int pos = -1;     //find equip item from allItemList
+            for (int i = 0; i < allEquipments.size(); i++) {
+                if (allEquipments.get(i).getName().equals(retrievedEquipment.getName())) {
+                    pos = i;
+                }
+            }
+            if (pos != -1) {    //remove equipped Item from allitemList (will be added to equipped list)
+                allEquipments.remove(pos);
             }
         }
-        if(pos!=-1){    //remove equipped Item from allitemList (will be added to equipped list)
-            allEquipments.remove(pos);
-        }
+        InventoryPane.equipSuccess=false;
         Launcher.setAllEquipments(allEquipments);
         Launcher.refreshPane();
-
     }
 }

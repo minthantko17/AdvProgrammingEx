@@ -19,6 +19,7 @@ import static se233.chapter1.controller.AllCustomHandler.onEquipdone;
 
 public class InventoryPane extends ScrollPane {
     private ArrayList<BasedEquipment> equipmentArray;
+    public static boolean equipSuccess=false;
     public InventoryPane(){    }
 
     //create pane with items
